@@ -17,6 +17,7 @@ app.use(require('webpack-dev-middleware')(compiler, {
 app.use(require('webpack-hot-middleware')(compiler));
 
 app.use('/public', express.static('public'));
+app.use('/node_modules', express.static('node_modules'));
 
 app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, 'index.html'));
@@ -28,8 +29,15 @@ io.on('connection', function(socket){
 	socket.id = socket.id.slice(2);
   console.log('a user connected');
 
-  currentConnections.push({id: socket.id, coords: {latitude: 0, longitude: 0}});
+  //currentConnections.push({id: socket.id, coords: {latitude: 0, longitude: 0}});
+  currentConnections.push({id: socket.id});
   io.emit('getting clients', currentConnections);
+
+  socket.on('setting client metadata', function(data) {
+  	var index = currentConnections.map(function(e) { return e.id; }).indexOf(socket.id);
+	currentConnections[index].colors = {name: data.colorName, hex: data.colorHex};
+	io.emit('getting clients', currentConnections);
+  });
 
   socket.on('setting geoCoords', function(coords) {
 	  var index = currentConnections.map(function(e) { return e.id; }).indexOf(socket.id);

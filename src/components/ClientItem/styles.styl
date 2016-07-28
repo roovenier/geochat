@@ -1,0 +1,62 @@
+.item
+	padding 15px
+	display block
+	text-decoration none
+	color #000
+	transition .1s all
+
+	&:hover
+		background-color #303436
+
+		& .name
+			background-color transparent
+
+		& .distance
+			color #fff
+
+.client
+	display flex
+
+.avatar
+	margin-right 30px
+	width 60px
+	height 60px
+	border-radius 8px
+
+.data
+	display flex
+	flex-direction column
+	justify-content center
+
+.status
+	display flex
+
+.name
+	margin 0
+	padding 1px 2px
+	font-size 14px
+	background-color #000
+
+.notifications
+	margin -10px 0 0 6px
+	display flex
+	align-items center
+	justify-content center
+	width 20px
+	height 20px
+	font-size 14px
+	color #fff
+	background-color #d02121
+	border-radius 50%
+
+.distance
+	margin 8px 0 0
+	display flex
+	font-size 14px
+
+	&:before
+		margin-right 6px
+		content ''
+		width 16px
+		height 16px
+		background-image url('/public/images/distance.svg')

@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   devtool: 'source-map',
@@ -22,13 +23,20 @@ module.exports = {
       compressor: {
         warnings: false
       }
-    })
+  	}),
+	new ExtractTextPlugin('styles.css')
   ],
   module: {
-    loaders: [{
-      test: /\.js$/,
-      loaders: ['babel'],
-      include: path.join(__dirname, 'src')
-    }]
+    loaders: [
+	  {
+      	test: /\.js$/,
+      	loaders: ['babel'],
+      	include: path.join(__dirname, 'src')
+	  },
+	  {
+		test: /\.styl$/,
+   		loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!stylus')
+	  }
+	]
   }
 };

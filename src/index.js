@@ -4,7 +4,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { render } from 'react-dom';
 import thunk from 'redux-thunk';
-import Wrapper from './containers/Wrapper';
+import App from './containers/App';
 import Clients from './containers/Clients';
 import Dialog from './containers/Dialog';
 import geochatApp from './reducers/index';
@@ -15,7 +15,7 @@ let store = createStoreWithMiddleware(geochatApp);
 render(
 	<Provider store={store}>
 		<Router history={browserHistory}>
-			<Route path='/' component={Wrapper}>
+			<Route path='/' component={App}>
 				<IndexRoute component={Clients} />
 				<Route path="/dialog/:clientId" component={Dialog} />
 			</Route>

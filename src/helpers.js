@@ -1,14 +1,12 @@
-export function getCoords() {
-	return new Promise((resolve, reject) => {
-		navigator.geolocation.getCurrentPosition(position => {
-			const { latitude, longitude } = position.coords;
-			resolve({latitude, longitude});
-		}, error => {
-			console.log(error);
-			reject(error.message);
-		});
+export const getCoords = new Promise((resolve, reject) => {
+	navigator.geolocation.getCurrentPosition(position => {
+		const { latitude, longitude } = position.coords;
+		resolve({latitude, longitude});
+	}, error => {
+		console.log(error);
+		reject(error.message);
 	});
-}
+});
 
 export function getDistance(lat1,lon1,lat2,lon2) {
 	var R = 6371; // Radius of the earth in km
@@ -33,4 +31,17 @@ export function guidGenerator() {
        return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
     };
     return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+}
+
+export function pickRandomProperty(obj) {
+    var result;
+    var count = 0;
+    for (var prop in obj)
+        if (Math.random() < 1/++count)
+           result = prop;
+    return result;
+}
+
+export function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }
