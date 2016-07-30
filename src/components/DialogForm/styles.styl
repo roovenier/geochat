@@ -1,0 +1,39 @@
+.form
+	margin-bottom 25px
+	display flex
+	flex-direction column
+	justify-content flex-end
+	flex 150px 0 0
+
+.msgField
+	margin-bottom 15px
+	padding 15px 20px
+	width 70%
+	height 70px
+	line-height 23px
+	font-size 14px
+	color #000
+	outline 0
+	border 1px solid #c8c8c8
+	border-radius 4px
+	overflow auto
+
+	&:empty:before
+		content "Type something..."
+		color #c8c8c8
+
+.send
+	width 128px
+	height 35px
+	font-size 17px
+	text-transform uppercase
+	color #fff
+	background-color #1d8824
+	border-radius 8px
+	border 0
+	outline 0
+	cursor pointer
+	transition .2s all
+
+	&:hover
+		background-color #38AD40

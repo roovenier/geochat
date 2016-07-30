@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import csscolors from 'json!../colors.json';
-console.log(csscolors);
 import { getCoords, getDistance, pickRandomProperty, capitalizeFirstLetter } from '../helpers';
 import { setDefaultClients } from '../actions/clients';
 import { addMessage } from '../actions/messages';
 import { addNotification } from '../actions/notifications';
 
+import styles from '../components/common.styl';
 import Header from '../components/Header/Header';
 import Profile from '../components/Profile/Profile';
 
@@ -53,7 +53,7 @@ class App extends Component {
 
 		if(clientMe.coords && clientMe.colors) {
 			return (
-				<div>
+				<div className={styles.wrapper}>
 					<Header />
 
 					<Profile

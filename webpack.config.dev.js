@@ -1,5 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
+var precss = require('precss');
+var autoprefixer = require('autoprefixer');
 
 module.exports = {
   // or devtool: 'eval' to debug issues with compiled output:
@@ -29,20 +31,23 @@ module.exports = {
       	include: path.join(__dirname, 'src')
 	  },
 	  {
-		test: /\.css$/,
-		loaders: [
-	    	'style?sourceMap',
-	        'css?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]'
-	    ]
-	  },
-	  {
 	  	test: /\.styl$/,
 	  	loaders: [
 		  'style?sourceMap',
 		  'css?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]',
+		  'postcss',
 		  'stylus'
 	  	]
+	  },
+	  {
+		test: /jquery-mousewheel/, loader: "imports?define=>false&this=>window"
+	  },
+	  {
+		test: /malihu-custom-scrollbar-plugin/, loader: "imports?define=>false&this=>window"
 	  }
 	]
+  },
+  postcss: function () {
+    return [precss, autoprefixer];
   }
 };

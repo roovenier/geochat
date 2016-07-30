@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { guidGenerator } from '../helpers';
+import DialogPage from '../components/DialogPage/DialogPage';
 import { addMessage } from '../actions/messages';
 import { removeNotification } from '../actions/notifications';
+import { getDistance, guidGenerator } from '../helpers';
 
 const ioObject = io();
 
@@ -13,32 +14,19 @@ class Dialog extends Component {
 	}
 
 	render() {
-		//const dialogObj = this.props.messages.find((d) => JSON.stringify(d.clients) === JSON.stringify([this.props.clients.clientMe.id, this.props.params.clientId])) || {};
-		//const dialogObj = this.props.messages.find(item => item.clients.indexOf(this.props.clients.clientMe.id) > -1 && item.clients.indexOf(this.props.params.clientId) > -1) || {};
-		//console.log(dialogObj);
+		const { clientMe, clients } = this.props.clients;
+
+		const interlocutor = clients.filter(item => item.id === this.props.params.clientId)[0];
+		const distance = getDistance(clientMe.coords.latitude, clientMe.coords.longitude, interlocutor.coords.latitude, interlocutor.coords.longitude);
 
 		return (
-			<div>
-				<p>this is dialog page with {this.props.params.clientId}</p>
-
-				{this.props.messages[this.props.params.clientId] && this.props.messages[this.props.params.clientId].map(item => {
-					const date = new Date(item.date * 1000);
-
-					return (
-						<div key={guidGenerator()}>
-							<p><span>{date.getHours()}:{'0' + date.getMinutes()}</span> {item.sender} says:</p>
-							<p>{item.text}</p>
-							<hr />
-						</div>
-					);
-				})}
-
-				<textarea placeholder="Write something..." ref="msgText"></textarea>
-
-				<br />
-
-				<button onClick={() => this.sendMessage()}>Send</button>
-			</div>
+			<DialogPage
+				interlocutor={interlocutor}
+				clientMe={clientMe}
+				distance={distance}
+				messages={this.props.messages}
+				sendMessage={text => this.sendMessage(text)}
+			/>
 		);
 	}
 
@@ -55,24 +43,18 @@ class Dialog extends Component {
 
 	componentDidUpdate() {
 		this.props.dispatch(removeNotification(this.props.clients.clientMe.id, this.props.params.clientId));
-		//console.log([this.props.clients.clientMe.id, this.props.params.clientId]);
-		//console.log(this.props.messages.find((d) => JSON.stringify(d.clients) === JSON.stringify([this.props.clients.clientMe.id, this.props.params.clientId])));
 	}
 
-	// componentWillReceiveProps(nextProps) {
-	// 	this.socket.emit('messages', {recipient: this.props.params.clientId, client: this.props.clients.clientMe.id, messages: nextProps.messages[this.props.params.clientId]});
-	// }
-
-	sendMessage() {
+	sendMessage(text) {
 		const messageObj = {
 			sender: this.props.clients.clientMe.id,
+			id: guidGenerator(),
 			date: Math.floor(Date.now() / 1000),
-			text: this.refs.msgText.value
+			text
 		}
 		this.props.dispatch(addMessage(this.props.params.clientId, messageObj));
 		this.socket.emit('adding message', {recipient: this.props.params.clientId, sender: this.props.clients.clientMe.id, message: messageObj});
 		this.socket.emit('adding notification', {recipient: this.props.params.clientId, sender: this.props.clients.clientMe.id});
-		this.refs.msgText.value = '';
 	}
 }
 

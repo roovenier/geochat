@@ -1,0 +1,30 @@
+.dialog
+	margin 0 20px
+	display flex
+	flex-direction column
+	flex 1
+
+.back
+	margin-bottom 15px
+	display inline-flex
+	align-items center
+	font-size 16px
+	color #000
+	text-decoration none
+	transition .2s all
+
+	&:before
+		content ""
+		margin-right 8px
+		width 15px
+		height 11px
+		background-image url('/public/images/back.svg')
+
+	&:hover
+		color #1F75B7
+
+.messages
+	margin-bottom 25px
+	width 75.5%
+	flex 1
+	overflow auto
