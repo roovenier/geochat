@@ -1,3 +1,5 @@
+@import '../breakpoints'
+
 .item
 	padding 15px
 	display block
@@ -22,6 +24,9 @@
 	width 60px
 	height 60px
 	border-radius 8px
+
+	@media (max-width: $sm-screen)
+		margin-right 20px
 
 .data
 	display flex

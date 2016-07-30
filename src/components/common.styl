@@ -1,3 +1,5 @@
+@import './breakpoints'
+
 *
 	font-family 'Roboto', Arial, sans-serif
 
@@ -13,6 +15,10 @@ html, body
 	margin 0 auto
 	padding 0 10px
 	width 940px
+
+	@media (max-width: $lg-screen)
+		padding 0
+		width 100%
 
 .containerFlex
 	@extends .container
