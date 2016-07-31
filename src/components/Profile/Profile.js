@@ -8,7 +8,7 @@ export default class Header extends Component {
 
 		return (
 			<div className={common.container}>
-				<div className={styles.profile}>
+				<div className={this.props.profileDialog ? styles.profileDialog : styles.profile}>
 					<div className={styles.avatar} style={{backgroundColor: clientMe.colors.hex}}></div>
 
 					<div className={styles.data}>

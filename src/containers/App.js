@@ -58,6 +58,7 @@ class App extends Component {
 
 					<Profile
 						clientMe={clientMe}
+						profileDialog={this.props.location.pathname.indexOf('dialog/') === -1 ? false : true}
 					/>
 
 					{this.props.children}

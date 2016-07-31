@@ -22,6 +22,8 @@ export default class Interlocutor extends Component {
 						<p className={styles.prop}>
 							Geoposition: <span className={styles.value}>{interlocutor.coords.latitude}, {interlocutor.coords.longitude} (~{Math.round(distance * 1000)}m from you)</span>
 						</p>
+
+						<p className={styles.distance}>~{Math.round(distance * 1000)}m from you</p>
 					</div>
 				</div>
 			</div>

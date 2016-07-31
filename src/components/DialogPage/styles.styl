@@ -1,8 +1,13 @@
+@import '../breakpoints'
+
 .dialog
 	margin 0 20px
 	display flex
 	flex-direction column
 	flex 1
+
+	@media (max-width: $sm-screen)
+		margin 0
 
 .back
 	margin-bottom 15px
@@ -12,6 +17,9 @@
 	color #000
 	text-decoration none
 	transition .2s all
+
+	@media (max-width: $sm-screen)
+		margin-left 15px
 
 	&:before
 		content ""
@@ -28,3 +36,15 @@
 	width 75.5%
 	flex 1
 	overflow auto
+
+	@media (max-width: $md-screen)
+		width 100%
+
+	@media (max-width: $sm-screen)
+		padding 0 15px
+		width auto
+
+.messages :global .mCSB_scrollTools .mCSB_draggerContainer
+
+	@media (max-width: $sm-screen)
+		left 11px
