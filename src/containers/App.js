@@ -36,6 +36,8 @@ class App extends Component {
 
 		const colorName = pickRandomProperty(csscolors);
 		const colorHex = csscolors[colorName];
+		alert(colorName)
+		alert(colorHex)
 		this.socket.emit('setting client metadata', {
 			colorName: capitalizeFirstLetter(colorName), colorHex
 		});
@@ -53,9 +55,6 @@ class App extends Component {
 		const { clientMe } = this.props.clients;
 
 		if(clientMe.coords && clientMe.colors) {
-			alert(clientMe.coords.longitude)
-			alert(clientMe.colors.colorName)
-			alert(clientMe.colors.colorHex)
 			return (
 				<div className={styles.wrapper}>
 					<Header />
