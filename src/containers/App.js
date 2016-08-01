@@ -42,9 +42,11 @@ class App extends Component {
 
 		getCoords
 			.then(result => {
+				alert('result: ' + result)
 				this.socket.emit('setting geoCoords', result);
 			})
 			.catch(error => {
+				alert('error: ' + error)
 				alert(error);
 			});
 	}
