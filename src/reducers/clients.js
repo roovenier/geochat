@@ -8,13 +8,9 @@ const defaultState = {
 export default function clients(state = defaultState, action) {
 	switch (action.type) {
 		case SET_CLIENTS:
-			return Object.assign({}, state, {
-				clients: [...action.clients]
-			});
+			return { ...state, clients: [...action.clients] }
 		case SET_CLIENT_ME:
-			return Object.assign({}, state, {
-				clientMe: action.clientMe
-			});
+			return { ...state, clientMe: action.clientMe }
 		default:
 			return state;
 	}

@@ -12,12 +12,10 @@ import styles from '../components/common.styl';
 import Header from '../components/Header/Header';
 import Profile from '../components/Profile/Profile';
 
-const ioObject = io();
-
 class App extends Component {
 	constructor(props) {
 		super(props);
-		this.socket = ioObject;
+		this.socket = io();
 
 		this.socket.on('getting clients', clients => {
 			this.props.dispatch(setDefaultClients(
@@ -52,9 +50,6 @@ class App extends Component {
 	render() {
 		const { clientMe } = this.props.clients;
 
-		alert(clientMe.coords.longitude)
-		alert(clientMe.colors.colorName)
-		alert(clientMe.colors.colorHex)
 		if(clientMe.coords && clientMe.colors) {
 			return (
 				<div className={styles.wrapper}>

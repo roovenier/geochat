@@ -5,12 +5,10 @@ import { addMessage } from '../actions/messages';
 import { removeNotification } from '../actions/notifications';
 import { getDistance, guidGenerator } from '../helpers';
 
-const ioObject = io();
-
 class Dialog extends Component {
 	constructor(props) {
 		super(props);
-		this.socket = ioObject;
+		this.socket = io();
 	}
 
 	render() {

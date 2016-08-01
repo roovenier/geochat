@@ -24,7 +24,6 @@ var currentConnections = [];
 
 io.on('connection', function(socket){
 	socket.id = socket.id.slice(2);
-  console.log('a user connected');
 
   //currentConnections.push({id: socket.id, coords: {latitude: 0, longitude: 0}});
   currentConnections.push({id: socket.id});
