@@ -23,7 +23,6 @@
     "eslint-plugin-babel": "^3.0.0",
     "eslint-plugin-react": "^3.11.3",
     "eventsource-polyfill": "^0.9.6",
-    "express": "^4.13.3",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
     "json-loader": "^0.5.4",
@@ -38,7 +37,7 @@
     "webpack-hot-middleware": "^2.9.1"
   },
   "dependencies": {
-    "css-color-names": "0.0.4",
+	"express": "^4.13.3",
     "imports-loader": "^0.6.5",
     "jquery": "^3.1.0",
     "jquery-mousewheel": "^3.1.13",
