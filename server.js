@@ -45,11 +45,13 @@ io.on('connection', function(socket){
   });
 });
 
-http.listen(3000, function(err) {
+var port = process.env.PORT || 80
+
+http.listen(port, function(err) {
   if (err) {
     console.log(err);
     return;
   }
 
-  console.log('Listening at http://localhost:3000');
+  console.log('Listening at ' + port + ' port');
 });
