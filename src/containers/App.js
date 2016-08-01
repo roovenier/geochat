@@ -42,11 +42,9 @@ class App extends Component {
 
 		getCoords
 			.then(result => {
-				alert('result: ' + result)
 				this.socket.emit('setting geoCoords', result);
 			})
 			.catch(error => {
-				alert('error: ' + error)
 				alert(error);
 			});
 	}
@@ -55,6 +53,9 @@ class App extends Component {
 		const { clientMe } = this.props.clients;
 
 		if(clientMe.coords && clientMe.colors) {
+			alert(clientMe.coords.longitude)
+			alert(clientMe.colors.colorName)
+			alert(clientMe.colors.colorHex)
 			return (
 				<div className={styles.wrapper}>
 					<Header />

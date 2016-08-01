@@ -1,5 +1,4 @@
 import { Promise } from 'es6-promise';
-alert(Promise)
 
 export const getCoords = new Promise((resolve, reject) => {
 	navigator.geolocation.getCurrentPosition(position => {
