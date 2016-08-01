@@ -1,3 +1,5 @@
+import { Promise } from 'es6-promise';
+
 export const getCoords = new Promise((resolve, reject) => {
 	navigator.geolocation.getCurrentPosition(position => {
 		const { latitude, longitude } = position.coords;
