@@ -10,9 +10,9 @@ module.exports = {
     './src/index'
   ],
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, 'static'),
     filename: 'bundle.js',
-    publicPath: '/static/'
+	publicPath: '/static/'
   },
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
@@ -26,7 +26,7 @@ module.exports = {
         warnings: false
       }
   	}),
-	new ExtractTextPlugin('styles.css')
+	new ExtractTextPlugin('css/styles.css')
   ],
   module: {
     loaders: [
@@ -36,8 +36,28 @@ module.exports = {
       	include: path.join(__dirname, 'src')
 	  },
 	  {
+		test: /\.css$/,
+   		loader: ExtractTextPlugin.extract(['css'])
+	  },
+	  {
 		test: /\.styl$/,
-   		loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!stylus')
+		loader: ExtractTextPlugin.extract('style', 'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!stylus?paths[]=node_modules&paths[]=src')
+	  },
+	  {
+		test: /^jquery-mousewheel$/,
+		loader: "imports?$=jquery&define=>false&this=>window"
+	  },
+	  {
+		test: /^malihu-custom-scrollbar-plugin$/,
+		loader: "imports?$=jquery&define=>false&this=>window"
+	  },
+	  {
+		test: /\.(png|jpg|gif)$/,
+		loader: 'file?name=images/[hash].[ext]'
+	  },
+	  {
+		test: /\.svg(?:\?v=[\d.]+)?$/,
+		loader: "file?name=images/[hash].[ext]"
 	  }
 	]
   },

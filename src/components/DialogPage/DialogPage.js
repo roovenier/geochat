@@ -7,8 +7,11 @@ import DialogMsg from '../DialogMsg/DialogMsg';
 import DialogForm from '../DialogForm/DialogForm';
 
 import $ from 'jquery';
-require("jquery-mousewheel")($);
-require('malihu-custom-scrollbar-plugin')($);
+//require('jquery-mousewheel')($);
+//require('malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.js')($);
+import 'jquery-mousewheel';
+import 'malihu-custom-scrollbar-plugin';
+import 'malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css';
 
 export default class DialogPage extends Component {
 	render() {

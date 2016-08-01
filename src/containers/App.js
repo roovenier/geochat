@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import 'normalize.css';
 
 import csscolors from 'json!../colors.json';
 import { getCoords, getDistance, pickRandomProperty, capitalizeFirstLetter } from '../helpers';

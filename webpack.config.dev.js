@@ -15,9 +15,9 @@ module.exports = {
     './src/index'
   ],
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, 'static'),
     filename: 'bundle.js',
-    publicPath: '/dist/'
+    publicPath: '/static/'
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
@@ -31,6 +31,10 @@ module.exports = {
       	include: path.join(__dirname, 'src')
 	  },
 	  {
+		test: /\.css$/,
+   		loaders: ['style?sourceMap', 'css']
+	  },
+	  {
 	  	test: /\.styl$/,
 	  	loaders: [
 		  'style?sourceMap',
@@ -40,12 +44,20 @@ module.exports = {
 	  	]
 	  },
 	  {
-		test: /jquery-mousewheel/,
-		loader: "imports?define=>false&this=>window"
+		test: /^jquery-mousewheel$/,
+		loader: "imports?$=jquery&define=>false&this=>window"
 	  },
 	  {
-		test: /malihu-custom-scrollbar-plugin/,
-		loader: "imports?define=>false&this=>window"
+		test: /^malihu-custom-scrollbar-plugin$/,
+		loader: "imports?$=jquery&define=>false&this=>window"
+	  },
+	  {
+		test: /\.(png|jpg|gif)$/,
+		loader: 'file?name=images/[hash].[ext]'
+	  },
+	  {
+		test: /\.svg(?:\?v=[\d.]+)?$/,
+		loader: "file?name=images/[hash].[ext]"
 	  }
 	]
   },
