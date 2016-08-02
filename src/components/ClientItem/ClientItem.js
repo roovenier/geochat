@@ -4,7 +4,7 @@ import styles from './styles.styl';
 
 export default class ClientItem extends Component {
 	render() {
-		const { item, clientMe, notifications, distance } = this.props;
+		const { item, clientMe, notifications } = this.props;
 
 		return (
 			<Link className={styles.item} to={`/dialog/${item.id}`}>
@@ -18,7 +18,7 @@ export default class ClientItem extends Component {
 							{notifications[clientMe.id] && notifications[clientMe.id][item.id] ? <span className={styles.notifications}>{notifications[clientMe.id][item.id]}</span> : null}
 						</div>
 
-						<p className={styles.distance}>~{Math.round(distance * 1000)}m from you</p>
+						<p className={styles.distance}>~{Math.round(item.distance * 1000)}m from you</p>
 					</div>
 				</div>
 			</Link>

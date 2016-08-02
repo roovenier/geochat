@@ -23,9 +23,9 @@ app.get('*', function(req, res) {
 var currentConnections = [];
 
 io.on('connection', function(socket){
+	console.log('user connected');
 	socket.id = socket.id.slice(2);
 
-  //currentConnections.push({id: socket.id, coords: {latitude: 0, longitude: 0}});
   currentConnections.push({id: socket.id});
   io.emit('getting clients', currentConnections);
 

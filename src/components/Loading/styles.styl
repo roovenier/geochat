@@ -1,0 +1,43 @@
+@keyframes dots-1
+	from
+		opacity 0
+	25%
+		opacity 1
+
+@keyframes dots-2
+	from
+		opacity 0
+	50%
+		opacity 1
+
+@keyframes dots-3
+	from
+		opacity 0
+	75%
+		opacity 1
+
+.container
+	position absolute
+	top 0
+	left 0
+	right 0
+	bottom 0
+	display flex
+	align-items center
+	justify-content center
+	font-size 24px
+	color #999
+
+.text
+	margin 0
+
+.dots span
+	animation dots-1 1.5s infinite steps(1)
+
+	&:first-child
+
+		& + span
+			animation-name dots-2
+
+			& + span
+				animation-name dots-3

@@ -13,14 +13,13 @@ export default class ClientsList extends Component {
 				<div className={styles.clients}>
 					<p className={styles.title}>Current users near you:</p>
 
-					<div className={styles.list}>
-						{Object.keys(clientMe).length > 0 && clients.map(item => {
-							if(item.coords && item.colors) {
-								const distance = getDistance(clientMe.coords.latitude, clientMe.coords.longitude, item.coords.latitude, item.coords.longitude);
-								return (distance !== 0 && distance < 10 && clients.id !== clientMe.id) ? <ClientItem key={item.id} item={item} clientMe={clientMe} notifications={notifications} distance={distance} /> : null;
-							}
-						})}
-					</div>
+					{clients.length > 0 ? (
+						<div className={styles.list}>
+							{Object.keys(clientMe).length > 0 && clients.map(item => {
+								return <ClientItem key={item.id} item={item} clientMe={clientMe} notifications={notifications} />;
+							})}
+						</div>
+					) : <p className={styles.nobody}>Nobody&#39;s here :(</p>}
 				</div>
 			</div>
 		);

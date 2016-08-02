@@ -11,6 +11,7 @@ import { addNotification } from '../actions/notifications';
 import styles from '../components/common.styl';
 import Header from '../components/Header/Header';
 import Profile from '../components/Profile/Profile';
+import Loading from '../components/Loading/Loading';
 
 class App extends Component {
 	constructor(props) {
@@ -64,7 +65,7 @@ class App extends Component {
 				</div>
 			);
 		} else {
-			return null;
+			return <Loading />;
 		}
 	}
 }
