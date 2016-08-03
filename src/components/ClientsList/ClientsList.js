@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { getDistance } from '../../helpers';
 import common from '../common.styl';
 import styles from './styles.styl';
 import ClientItem from '../ClientItem/ClientItem';

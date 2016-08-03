@@ -7,38 +7,44 @@ import DialogMsg from '../DialogMsg/DialogMsg';
 import DialogForm from '../DialogForm/DialogForm';
 
 import $ from 'jquery';
-//require('jquery-mousewheel')($);
-//require('malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.js')($);
 import 'jquery-mousewheel';
 import 'malihu-custom-scrollbar-plugin';
 import 'malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css';
 
 export default class DialogPage extends Component {
 	render() {
-		const { interlocutor, clientMe, messages, distance } = this.props;
+		const { interlocutor, clientMe, messages } = this.props;
 
 		return (
 			<div className={common.containerFlex}>
-				<div className={styles.dialog}>
-					<div>
-						<Link className={styles.back} to='/'>Back</Link>
-
-						<Interlocutor interlocutor={interlocutor} distance={distance} />
-					</div>
-
-					<div className={styles.messages} ref="messages">
+				{interlocutor !== null ? (
+					<div className={styles.dialog}>
 						<div>
-							{messages[interlocutor.id] && messages[interlocutor.id].map(item => {
-								const date = new Date(item.date * 1000);
-								const client = (item.sender === interlocutor.id) ? interlocutor : clientMe;
+							<Link className={styles.back} to='/'>Back</Link>
 
-								return <DialogMsg key={item.id} date={date} item={item} client={client} />;
-							})}
+							<Interlocutor interlocutor={interlocutor} />
 						</div>
-					</div>
 
-					<DialogForm keyDown={e => this.keyDown(e)} sendMessage={text => this.props.sendMessage(text)} />
-				</div>
+						<div className={styles.messages} ref="messages">
+							<div>
+								{messages[interlocutor.id] && messages[interlocutor.id].map(item => {
+									const date = new Date(item.date * 1000);
+									const client = (item.sender === interlocutor.id) ? interlocutor : clientMe;
+
+									return <DialogMsg key={item.id} date={date} item={item} client={client} />;
+								})}
+							</div>
+						</div>
+
+						<DialogForm keyDown={e => this.keyDown(e)} sendMessage={text => this.props.sendMessage(text)} />
+					</div>
+				) : (
+					<div className={styles.dialog}>
+						<p className={styles.disconnected}>
+							Your interlocutor has disconnected. Please <Link className={styles.return} to='/'>go back</Link>
+						</p>
+					</div>
+				)}
 			</div>
 		);
 	}

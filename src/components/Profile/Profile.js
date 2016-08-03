@@ -17,7 +17,7 @@ export default class Header extends Component {
 						</p>
 
 						<p className={styles.prop}>
-							Your ID: <span className={styles.value}>Uj5CRqZ5b_Xubx9sAAAA</span>
+							Your ID: <span className={styles.value}>{clientMe.id}</span>
 						</p>
 
 						<p className={styles.prop}>

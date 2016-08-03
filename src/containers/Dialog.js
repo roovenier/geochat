@@ -6,22 +6,15 @@ import { removeNotification } from '../actions/notifications';
 import { getDistance, guidGenerator } from '../helpers';
 
 class Dialog extends Component {
-	constructor(props) {
-		super(props);
-		this.socket = io();
-	}
-
 	render() {
 		const { clientMe, clients } = this.props.clients;
 
-		const interlocutor = clients.filter(item => item.id === this.props.params.clientId)[0];
-		const distance = getDistance(clientMe.coords.latitude, clientMe.coords.longitude, interlocutor.coords.latitude, interlocutor.coords.longitude);
+		const interlocutor = clients.filter(item => item.id === this.props.params.clientId)[0] || null;
 
 		return (
 			<DialogPage
 				interlocutor={interlocutor}
 				clientMe={clientMe}
-				distance={distance}
 				messages={this.props.messages}
 				sendMessage={text => this.sendMessage(text)}
 			/>
@@ -29,7 +22,7 @@ class Dialog extends Component {
 	}
 
 	shouldComponentUpdate(nextProps) {
-		if(JSON.stringify(nextProps.messages) !== JSON.stringify(this.props.messages) || JSON.stringify(nextProps.notifications) !== JSON.stringify(this.props.notifications)) {
+		if(JSON.stringify(nextProps.messages) !== JSON.stringify(this.props.messages) || JSON.stringify(nextProps.notifications) !== JSON.stringify(this.props.notifications) || JSON.stringify(nextProps.clients) !== JSON.stringify(this.props.clients)) {
 			return true;
 		}
 		return false;
@@ -51,8 +44,8 @@ class Dialog extends Component {
 			text
 		}
 		this.props.dispatch(addMessage(this.props.params.clientId, messageObj));
-		this.socket.emit('adding message', {recipient: this.props.params.clientId, sender: this.props.clients.clientMe.id, message: messageObj});
-		this.socket.emit('adding notification', {recipient: this.props.params.clientId, sender: this.props.clients.clientMe.id});
+		this.props.socket.emit('adding message', {recipient: this.props.params.clientId, sender: this.props.clients.clientMe.id, message: messageObj});
+		this.props.socket.emit('adding notification', {recipient: this.props.params.clientId, sender: this.props.clients.clientMe.id});
 	}
 }
 
@@ -60,7 +53,8 @@ function select(state) {
 	return {
 		messages: state.messages,
 		clients: state.clients,
-		notifications: state.notifications
+		notifications: state.notifications,
+		socket: state.socket
 	};
 }
 

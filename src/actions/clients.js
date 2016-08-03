@@ -8,10 +8,3 @@ export function setClients(clients) {
 export function setClientMe(clientMe) {
 	return {type: SET_CLIENT_ME, clientMe};
 }
-
-export function setDefaultClients(clients, clientMe) {
-	return dispatch => {
-		dispatch(setClients(clients));
-		dispatch(setClientMe(clientMe));
-	};
-}

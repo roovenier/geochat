@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Promise } from 'es6-promise';
 import 'normalize.css';
 
 import csscolors from 'json!../colors.json';
-import { getCoords, getDistance, pickRandomProperty, capitalizeFirstLetter } from '../helpers';
-import { setDefaultClients } from '../actions/clients';
+import { getCoords, pickRandomProperty, capitalizeFirstLetter } from '../helpers';
+import { setClientMe, setClients } from '../actions/clients';
 import { addMessage } from '../actions/messages';
 import { addNotification } from '../actions/notifications';
+import { setSocket } from '../actions/socket';
 
 import styles from '../components/common.styl';
 import Header from '../components/Header/Header';
@@ -17,12 +19,18 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.socket = io();
+		this.props.dispatch(setSocket(this.socket));
 
-		this.socket.on('getting clients', clients => {
-			this.props.dispatch(setDefaultClients(
-				clients.filter(item => item.id !== this.socket.id),
-				clients.filter(item => item.id === this.socket.id)[0])
-			);
+		this.socket.on('set my client data', data => {
+			this.props.dispatch(setClientMe(data));
+		});
+
+		this.socket.on('get clients', () => {
+			this.socket.emit('getting clients');
+		});
+
+		this.socket.on('setting clients', clients => {
+			this.props.dispatch(setClients(clients));
 		});
 
 		this.socket.on('getting message', obj => {
@@ -31,27 +39,28 @@ class App extends Component {
 
 		this.socket.on('getting notification', obj => {
 			this.props.dispatch(addNotification(obj.recipient, obj.sender));
-		})
-
-		const colorName = pickRandomProperty(csscolors);
-		const colorHex = csscolors[colorName];
-		this.socket.emit('setting client metadata', {
-			colorName: capitalizeFirstLetter(colorName), colorHex
 		});
 
-		getCoords
-			.then(result => {
-				this.socket.emit('setting geoCoords', result);
+		Promise.all([
+			new Promise((resolve, reject) => {
+				const colorName = pickRandomProperty(csscolors);
+				const colorHex = csscolors[colorName];
+				resolve({colorName, colorHex});
+			})
+		, getCoords])
+			.then(values => {
+				this.socket.emit('setting client metadata', {colors: values[0], coords: values[1]});
 			})
 			.catch(error => {
-				alert(error);
+				const e = error.message || error;
+				alert(e);
 			});
 	}
 
 	render() {
 		const { clientMe } = this.props.clients;
 
-		if(clientMe.coords && clientMe.colors) {
+		if(clientMe.coords && clientMe.colors && Object.keys(this.props.socket).length !== 0) {
 			return (
 				<div className={styles.wrapper}>
 					<Header />
@@ -72,7 +81,8 @@ class App extends Component {
 
 function select(state) {
 	return {
-		clients: state.clients
+		clients: state.clients,
+		socket: state.socket
 	};
 }
 

@@ -3,7 +3,7 @@ import styles from './styles.styl';
 
 export default class Interlocutor extends Component {
 	render() {
-		const { interlocutor, distance } = this.props;
+		const { interlocutor } = this.props;
 
 		return (
 			<div>
@@ -20,10 +20,10 @@ export default class Interlocutor extends Component {
 						</p>
 
 						<p className={styles.prop}>
-							Geoposition: <span className={styles.value}>{interlocutor.coords.latitude}, {interlocutor.coords.longitude} (~{Math.round(distance * 1000)}m from you)</span>
+							Geoposition: <span className={styles.value}>{interlocutor.coords.latitude}, {interlocutor.coords.longitude} (~{Math.round(interlocutor.distance * 1000)}m from you)</span>
 						</p>
 
-						<p className={styles.distance}>~{Math.round(distance * 1000)}m from you</p>
+						<p className={styles.distance}>~{Math.round(interlocutor.distance * 1000)}m from you</p>
 					</div>
 				</div>
 			</div>
