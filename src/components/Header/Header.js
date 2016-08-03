@@ -6,8 +6,8 @@ import styles from './styles.styl';
 export default class Header extends Component {
 	render() {
 		return (
-			<div className={common.container}>
-				<div className={styles.header}>
+			<div className={styles.header}>
+				<div className={common.container}>
 					<Link className={styles.logo} to={'/'}>Geochat</Link>
 				</div>
 			</div>
