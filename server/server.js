@@ -15,7 +15,6 @@ app.get('*', function(req, res) {
 var currentConnections = [];
 
 io.on('connection', function(socket){
-	console.log('user connected with id ' + socket.id);
 	socket.id = socket.id.slice(2);
 
 	currentConnections.push({id: socket.id});
@@ -27,7 +26,7 @@ io.on('connection', function(socket){
 			if(item.coords) {
 				var distance = getDistance(clientMe.coords.latitude, clientMe.coords.longitude, item.coords.latitude, item.coords.longitude);
 				item.distance = distance;
-				return distance !== 0 && distance < 10 && (item.id !== clientMe.id);
+				return distance !== 0 && distance <= 1 && (item.id !== clientMe.id);
 			} else {
 				return false;
 			}
@@ -54,7 +53,6 @@ io.on('connection', function(socket){
 	});
 
 	socket.on('disconnect', function(){
-		console.log('user disconnected');
 		currentConnections = currentConnections.filter(function(item) {return item.id != socket.id});
 
 		socket.broadcast.emit('get clients');
