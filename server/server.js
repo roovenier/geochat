@@ -1,5 +1,6 @@
 var path = require('path');
 var express = require('express');
+var getDistance = require('./helpers').getDistance;
 
 var app = express();
 var http = require('http').Server(app);
