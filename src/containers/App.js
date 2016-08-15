@@ -45,7 +45,7 @@ class App extends Component {
 			new Promise((resolve, reject) => {
 				const colorName = pickRandomProperty(csscolors);
 				const colorHex = csscolors[colorName];
-				resolve({colorName, colorHex});
+				resolve({colorName: capitalizeFirstLetter(colorName), colorHex});
 			})
 		, getCoords])
 			.then(values => {

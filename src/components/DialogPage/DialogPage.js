@@ -63,7 +63,7 @@ export default class DialogPage extends Component {
 			keyboard: { enable: false }
 		});
 
-		$(this.refs.messages).mCustomScrollbar("scrollTo", 'bottom', {
+		$(this.refs.messages).mCustomScrollbar("scrollTo", 'top', {
 			scrollInertia: 300
 		});
 	}

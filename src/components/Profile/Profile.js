@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import common from '../common.styl';
 import styles from './styles.styl';
 
-export default class Header extends Component {
+export default class Profile extends Component {
 	render() {
 		const { clientMe } = this.props;
 
