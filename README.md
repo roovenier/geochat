@@ -1,6 +1,6 @@
 # Geochat
 
-Geochat allows you communicate with people which are located at a maximum distance of 1 km around you.
+Geochat allows you communicate with people which are located at a maximum distance of 5 km around you.
 
 ## Demo
 

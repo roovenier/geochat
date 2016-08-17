@@ -26,7 +26,7 @@ io.on('connection', function(socket){
 			if(item.coords) {
 				var distance = getDistance(clientMe.coords.latitude, clientMe.coords.longitude, item.coords.latitude, item.coords.longitude);
 				item.distance = distance;
-				return distance !== 0 && distance <= 1 && (item.id !== clientMe.id);
+				return distance !== 0 && distance <= 5 && (item.id !== clientMe.id);
 			} else {
 				return false;
 			}
