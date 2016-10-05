@@ -7,9 +7,9 @@ import { getDistance, guidGenerator } from '../helpers';
 
 class Dialog extends Component {
 	render() {
-		const { clientMe, clients } = this.props.clients;
+		const { clientMe, clientList } = this.props.clients;
 
-		const interlocutor = clients.filter(item => item.id === this.props.params.clientId)[0] || null;
+		const interlocutor = clientList.filter(item => item.id === this.props.params.clientId)[0] || null;
 
 		return (
 			<DialogPage
@@ -29,33 +29,42 @@ class Dialog extends Component {
 	}
 
 	componentDidMount() {
-		this.props.dispatch(removeNotification(this.props.clients.clientMe.id, this.props.params.clientId));
+		this.removeNotification();
 	}
 
 	componentDidUpdate() {
-		this.props.dispatch(removeNotification(this.props.clients.clientMe.id, this.props.params.clientId));
+		this.removeNotification();
+	}
+
+	removeNotification() {
+		this.props.removeNotification(this.props.clients.clientMe.id, this.props.params.clientId);
 	}
 
 	sendMessage(text) {
+		const { clients, addMessage, socket, params } = this.props;
+
 		const messageObj = {
-			sender: this.props.clients.clientMe.id,
+			sender: clients.clientMe.id,
 			id: guidGenerator(),
 			date: Math.floor(Date.now() / 1000),
 			text
 		}
-		this.props.dispatch(addMessage(this.props.params.clientId, messageObj));
-		this.props.socket.emit('adding message', {recipient: this.props.params.clientId, sender: this.props.clients.clientMe.id, message: messageObj});
-		this.props.socket.emit('adding notification', {recipient: this.props.params.clientId, sender: this.props.clients.clientMe.id});
+		addMessage(this.props.params.clientId, messageObj);
+		socket.emit('adding message', {recipient: params.clientId, sender: clients.clientMe.id, message: messageObj});
+		socket.emit('adding notification', {recipient: params.clientId, sender: clients.clientMe.id});
 	}
 }
 
-function select(state) {
-	return {
-		messages: state.messages,
-		clients: state.clients,
-		notifications: state.notifications,
-		socket: state.socket
-	};
-}
+const mapStateToProps = ({ messages, clients, notifications, socket }) => ({
+	messages,
+	clients,
+	notifications,
+	socket
+});
 
-export default connect(select)(Dialog);
+const mapDispatchToProps = dispatch => ({
+	removeNotification: (myId, clientId) => dispatch(removeNotification(myId, clientId)),
+	addMessage: (clientId, messageObj) => dispatch(addMessage(clientId, messageObj))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dialog);

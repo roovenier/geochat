@@ -18,28 +18,20 @@ import Loading from '../components/Loading/Loading';
 class App extends Component {
 	constructor(props) {
 		super(props);
+		const { setSocket, setClientMe, setClients, addMessage, addNotification } = this.props;
+
 		this.socket = io();
-		this.props.dispatch(setSocket(this.socket));
+		setSocket(this.socket);
 
-		this.socket.on('set my client data', data => {
-			this.props.dispatch(setClientMe(data));
-		});
+		this.socket.on('set my client data', data => setClientMe(data));
 
-		this.socket.on('get clients', () => {
-			this.socket.emit('getting clients');
-		});
+		this.socket.on('get clients', () => this.socket.emit('getting clients'));
 
-		this.socket.on('setting clients', clients => {
-			this.props.dispatch(setClients(clients));
-		});
+		this.socket.on('setting clients', clients => setClients(clients));
 
-		this.socket.on('getting message', obj => {
-			this.props.dispatch(addMessage(obj.sender, obj.message));
-		});
+		this.socket.on('getting message', obj => addMessage(obj.sender, obj.message));
 
-		this.socket.on('getting notification', obj => {
-			this.props.dispatch(addNotification(obj.recipient, obj.sender));
-		});
+		this.socket.on('getting notification', obj => addNotification(obj.recipient, obj.sender));
 
 		Promise.all([
 			new Promise((resolve, reject) => {
@@ -79,11 +71,17 @@ class App extends Component {
 	}
 }
 
-function select(state) {
-	return {
-		clients: state.clients,
-		socket: state.socket
-	};
-}
+const mapStateToProps = ({ clients, socket }) => ({
+	clients,
+	socket
+});
 
-export default connect(select)(App);
+const mapDispatchToProps = dispatch => ({
+	setSocket: socket => dispatch(setSocket(socket)),
+	setClientMe: data => dispatch(setClientMe(data)),
+	setClients: clients => dispatch(setClients(clients)),
+	addMessage: (sender, message) => dispatch(addMessage(sender, message)),
+	addNotification: (recipient, sender) => dispatch(addNotification(recipient, sender))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

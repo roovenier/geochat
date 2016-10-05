@@ -1,28 +1,23 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
 import ClientsList from '../components/ClientsList/ClientsList';
 
-class Clients extends Component {
-	render() {
-		const { clients, clientMe } = this.props.clients;
-		const { notifications } = this.props;
+const Clients = ({ notifications, clients }) => {
+	const { clientList, clientMe } = clients;
 
-		return (
-			<ClientsList
-				clients={clients}
-				clientMe={clientMe}
-				notifications={notifications}
-			/>
-		);
-	}
-}
+	return (
+		<ClientsList
+			clients={clientList}
+			clientMe={clientMe}
+			notifications={notifications}
+		/>
+	);
+};
 
-function select(state) {
-	return {
-		clients: state.clients,
-		notifications: state.notifications
-	};
-}
+const mapStateToProps = ({ clients, notifications }) => ({
+	clients,
+	notifications
+});
 
-export default connect(select)(Clients);
+export default connect(mapStateToProps)(Clients);
